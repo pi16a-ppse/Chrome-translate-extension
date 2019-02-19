@@ -2,6 +2,12 @@
 Заполнение страницы переведенным текстом
  */
 opera.isReady(function() {
+  /**
+   * Карта атрибутов
+   * Описывает карту/массив атрибутов.
+   * Нужна для поиска этих атрибутов и замены в коде.
+   * @type {{for: string, className: string, html: string, text: string}} - структура карты.
+   */
   var attributeNameMap = window["attributeNameMap"] = {
     'className': 'className',
     'for': 'htmlFor',
@@ -42,7 +48,8 @@ opera.isReady(function() {
 
     /**
      * Установка значений в элементе
-     * @param e - опция
+     * @param e - объект/опция для анализа.
+     * Если e - indefined, поведение не определено.
      */
     function optionChanged(e) {
       var element = e.currentTarget;

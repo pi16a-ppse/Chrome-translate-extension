@@ -1,7 +1,11 @@
 /*
 Подготовка переведенных элементов (и сам перевод)
  */
-opera.isReady(function() {
+opera.isReady(
+    /**
+     * Функция-обертка для перевода
+     */
+    function() {
   // Элементы для перевода (text nodes)
   var translatableElements = document.querySelectorAll("._translate");
   for (var i = 0, l = translatableElements.length; i < l; i++) {
