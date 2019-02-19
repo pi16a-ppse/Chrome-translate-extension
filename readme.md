@@ -1,0 +1,1 @@
+Another browser extension for translating web pages into desired language. Uses Google Translate API.
