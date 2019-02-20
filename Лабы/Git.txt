@@ -1,0 +1,24 @@
+git init
+git add README.md
+git commit -m "Initial commit"
+git remote add origin <link>
+git push -u origin master
+
+git diff 17da83a
+
+git reset --hard 17da83a
+git push --force
+
+git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
+
+git status
+
+git checkout -b lab2
+
+git push --set-upstream origin lab2
+
+git checkout master
+
+git merge lab2
+
+git branch -d lab2
