@@ -9,6 +9,13 @@ Another browser extension for translating web pages into desired language. Uses 
   <li>You can set custom settings for every desired language.</li>
 </ul>
 
+
+<h2>How to install the extension:</h2>
+<ol>
+  <li>You need Opera 11+ to be installed</li>  
+  <li>Just double-click onto the .nex file.</li>
+</ol>
+
 <h2>Author</h2>
 <i>Victor Gorban</i>
 <br>
