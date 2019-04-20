@@ -1,25 +1,23 @@
-Another browser extension for translating web pages into desired language. Uses Google Translate API.
+Моя попытка написать браузерное расширение-переводчик. Столько боли с API, как в этот раз, еще не было. Под капотом использует Yandex Translate API, google content scripts.
 
-<h2>Features</h2>
+<h2>Особенности</h2>
 <ul>
-  <li>Settings page;</li>
-  <li>Multi-lang interface;</li>
-  <li>You can translate a page by clicking the button;</li>
-  <li>You can set default language;</li>
-  <li>You can set custom settings for every desired language.</li>
+  <li>Перевод слова по клику</li>
+  <li>Перевод выделения</li>
+  <li>Перевод по Ctrl+Enter</li>
 </ul>
 
 
-<h2>How to install the extension:</h2>
+<h2>Как установить:</h2>
 <ol>
-  <li>You need Opera 11+ to be installed</li>  
-  <li>Just double-click onto the .nex file.</li>
+  <li>Вам нужен chrome <73, chrome 63 подойдет. (В chrome 73 запретили запросы в расширениях.) </li>  
+  <li>Кликните 2 раза по .crx файлу.</li>
 </ol>
 
-<h2>Author</h2>
-<i>Victor Gorban</i>
+<h2>Автор</h2>
+<i>Виктор Горбань</i>
 <br>
-<i><b>This extension is fully open-source and copyright-free.</b></i>
+<i><b>Это расширение 100% свободно для копирования, изменения и любых других действий.</b></i>
 
 
-Go in)
+Вперед)
