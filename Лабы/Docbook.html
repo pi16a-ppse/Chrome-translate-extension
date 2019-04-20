@@ -1,0 +1,104 @@
+<h1>Описание проекта</h1>
+<p>Данный проект является браузерным расширением-переводчиком страниц.</p>
+<p>Проект доступен в Интернете: https://github.com/pi16a-ppse/Translate-Opera-browser-extension</p>
+<h2>Особенности проекта</h2>
+<p>Наличие страницы настроек;</p>
+<p>Перевод интерфейса на несколько языков;</p>
+<p>Возможность перевести страницу по нажатию кнопки;</p>
+<p>Возможность установить язык по умолчанию;</p>
+<p>Возможность настройки перевода для каждого языка отдельно.</p>
+<h1>Детали реализации</h1>
+<p>Особенности реализации проекта в целом:</p>
+<h2>Алгоритм инициализации перевода</h2>
+<p>При нажатии кнопки "перевести", активируется скрипт JavaScript, он ищет все текстовые узлы на странице и запоминает атрибуты.</p>
+<pre><code>                /*
+Заполнение страницы переведенным текстом
+ */
+opera.isReady(function() {
+  /**
+   * Карта атрибутов
+   * Описывает карту/массив атрибутов.
+   * Нужна для поиска этих атрибутов и замены в коде.
+   * @type {{for: string, className: string, html: string, text: string}} - структура карты.
+   */
+  var attributeNameMap = window[&quot;attributeNameMap&quot;] = {
+    &#39;className&#39;: &#39;className&#39;,
+    &#39;for&#39;: &#39;htmlFor&#39;,
+    html: &#39;innerHTML&#39;,
+    text: &#39;textContent&#39;
+  };
+  var CustomDOMElement = window[&quot;CustomDOMElement&quot;] = {
+    create: function(tag, props, children) {
+      var el = document.createElement(tag);
+      if (props) {
+        CustomDOMElement.setAttributes(el, props);
+      }
+      if (children) {
+        for (var i = 0, l = children.length; i &lt; l; i += 1) {
+          el.appendChild(children[i]);
+        }
+      }
+      return el;
+    },
+    setAttributes: function(el, props) {
+      for (var prop in props) {
+        if (props.hasOwnProperty(prop)) {
+          var name = attributeNameMap[prop],
+              value = props[prop];
+          if (value) {
+            if (name) {
+              el[name] = value;
+            } else {
+              el.setAttribute(prop, value);
+            }
+          }
+        }
+      }
+    }
+  };
+  }, false);
+});
+                </code></pre>
+				
+				<h1>Где задать языки для перевода и выбора языка?</h1>
+<p>На странице настроек. В коде этот блок находится в файле nameMap.js. Здесь происходит инициализация этого списка.</p>
+<pre><code>                /*
+ Инициализация списка языков
+ */
+opera.isReady(function() {
+  var NAME_MAP = window[&quot;NAME_MAP&quot;] = {
+    &quot;be&quot;: &quot;Belarusian - Беларуская&quot;,
+    &quot;bg&quot;: &quot;Bulgarian - български език&quot;,
+    &quot;en&quot;: &quot;English&quot;,
+    &quot;eo&quot;: &quot;Esperanto - Esperanto&quot;,
+    &quot;et&quot;: &quot;Estonian - Eesti&quot;,
+    &quot;ro&quot;: &quot;Romanian - Română&quot;,
+    &quot;ru&quot;: &quot;Russian - Русский&quot;,
+    &quot;uk&quot;: &quot;Ukrainian - Українська&quot;,
+    &quot;ur&quot;: &quot;Urdu - ہندوستانی&quot;,
+    &quot;vi&quot;: &quot;Vietnamese - Tiếng Việt&quot;,
+  };
+});
+                </code></pre>
+<h1>Как перевести страницу на другой язык, но при этом не сломать элементы форм?</h1>
+<p>Пример кода (из проекта) см. ниже:</p>
+<pre><code>                /**
+ /*
+Подготовка переведенных элементов (и сам перевод)
+ */
+opera.isReady(
+    /**
+     * Функция-обертка для перевода
+     */
+    function() {
+  // Элементы для перевода (text nodes)
+  var translatableElements = document.querySelectorAll(&quot;._translate&quot;);
+  for (var i = 0, l = translatableElements.length; i &lt; l; i++) {
+    if (translatableElements[i].tagName === &#39;INPUT&#39;) {
+      translatableElements[i].value = i18nlib.translate(translatableElements[i].id);
+    } else {
+      translatableElements[i].textContent = i18nlib.translate(translatableElements[i].id);
+    }
+  }
+});
+                </code></pre>

@@ -1,0 +1,23 @@
+{
+  "name": "chrome-translate-extension",
+  "version": "1.0.0",
+  "description": "I'm really tired of chrome bugs",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pi16a-ppse/Chrome-translate-extension.git"
+  },
+  "keywords": [
+    "chrome",
+    "translate"
+  ],
+  "author": "Victor Gorban",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pi16a-ppse/Chrome-translate-extension/issues"
+  },
+  "homepage": "https://github.com/pi16a-ppse/Chrome-translate-extension#readme"
+}

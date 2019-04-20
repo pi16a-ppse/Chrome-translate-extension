@@ -1,0 +1,38 @@
+{
+    "manifest_version": 2,
+    "name": "Переводчик страниц.",
+    "version": "1.0",
+    "icons": {
+        "64": "icons/64x64.png"
+    },
+    "browser_action": {
+        "default_title": "Нажимать сюда - совершенно лишнее",
+        "default_icon": "icons/64x64.png"
+    },
+    "background": {
+        "page": "background.html"
+    },
+    "permissions": [
+        "http://translate.yandex.net/*",
+        "tabs"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "js/jquery.min.js",
+                "js/convenient.js",
+                "js/vendor/yatr.js",
+                "js/background-include.js"
+            ],
+            "css": [
+                "css/main.css",
+                "css/bootstrap3.3.css"
+            ],
+            "run_at": "document_start"
+        }
+    ]
+}
