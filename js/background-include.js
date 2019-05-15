@@ -1,8 +1,4 @@
 "use strict";
-/**
- * В этом файле - работа с событиями, и их инициализация.
- */
-
 
 /**
  * Типа глобальная переменная; В нее заносится значение, когда пользователь выделяет текст; Из нее берется значение, когда пользователь нажимает ""
@@ -13,6 +9,7 @@ let selectionText = "";
 /**
  * Делает перевод и сопутствующие действия
  * @async
+ * @returns {void}
  */
 let doTranslateActions = async () => {
     $('#translateButton').hide();
@@ -36,6 +33,7 @@ let doTranslateActions = async () => {
 
 /**
  * Инициализация
+ * @returns {void}
  */
 $(document).ready(function () {
     // создаю div-активатор перевода
@@ -43,13 +41,13 @@ $(document).ready(function () {
 
     let translateButton = $("<button class=\"btn\" id=\"translateButton\">Перевести</button>").appendTo($div);
     let bodyOfDiv = $("<div id=\"bodyOfTranslateDiv\" style='background: white'>\n" +
-        "      <b><div id=\"mainTranslate\" style=\"padding: 2px;\"></div></b>\n" +
-        "    <div id=\"afterTranslate\">\n" +
-        "      <div id=\"translateLang\" style=\"padding: 2px;\"></div>\n" +
+            "      <b><div id=\"mainTranslate\" style=\"padding: 2px;\"></div></b>\n" +
+            "    <div id=\"afterTranslate\">\n" +
+            "      <div id=\"translateLang\" style=\"padding: 2px;\"></div>\n" +
 
-        "    \n" +
-        "    </div>\n" +
-        "  </div>")
+            "    \n" +
+            "    </div>\n" +
+            "  </div>")
         .appendTo($div);
     bodyOfDiv.hide();
     $div.hide();
@@ -63,7 +61,7 @@ $(document).ready(function () {
     $('#btn_submit').click(translateAndShow);
 
 
-// при нажатии на Ctrl + Enter
+    // при нажатии на Ctrl + Enter
     let isCtrl = false;
     $(document).keyup(function (e) {
         if (e.which == 17) isCtrl = false;
@@ -79,12 +77,9 @@ $(document).ready(function () {
         }
     });
 
-    /**
-     * Тут я убираю временные и устаревшие элементы
-     */
-    $(document).mousedown(() => {
-        // hideOldElements();
-    });
+    // $(document).mousedown(() => {
+    //     // hideOldElements();
+    // });
 
     $(document).mouseup(() => {
         $("#translateButton").show();
@@ -92,11 +87,11 @@ $(document).ready(function () {
     });
 
 
-})
-;
+});
 
 /**
  * По идее, запускается по клику на tempButton. Переводит и показывает перевод слова.
+ * @returns {void}
  */
 async function translateAndShow() {
     $("#translateButton").hide();
@@ -119,6 +114,7 @@ async function translateAndShow() {
 
 /**
  * Удаляет устаревшие временные элементы на странице (типа блока перевода)
+ * @returns {void}
  */
 function hideOldElements() {
     let $div = $("#myTempDiv");
@@ -157,11 +153,13 @@ function handleSelection() {
     let y = $span.offset().top;
     let $div = $("#myTempDiv");
     // $div.text(x + " " + y);
-    $div.css({left: x, top: y + ($span.height())});
+    $div.css({
+        left: x,
+        top: y + ($span.height())
+    });
 
     $div.show();
     $span.remove();
 
     return text;
 }
-

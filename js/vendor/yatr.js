@@ -9,6 +9,7 @@ const yatr = {
     /**
      * Собственно перевод.
      * @param text - текст для перевода
+     * @returns {Promise<json>} - json {text, ...}, обернутый в promise
      */
     translate: async function (text) {
         let langFrom = await this.detectLanguageFor(text);
@@ -25,13 +26,13 @@ const yatr = {
 
         let body = `text=${text}`;
         return fetch(url, {
-            method: 'POST',
-            body: body,
-            headers: new Headers({
-                'Content-Type': 'application/x-www-form-urlencoded'
-            })
+                method: 'POST',
+                body: body,
+                headers: new Headers({
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                })
 
-        })
+            })
             .then(response =>
                 response.json());
 
@@ -54,13 +55,13 @@ const yatr = {
 
         // json в формате {code, lang}
         let langData = await fetch(url, {
-            method: 'POST',
-            body: body,
-            headers: new Headers({
-                'Content-Type': 'application/x-www-form-urlencoded'
-            })
+                method: 'POST',
+                body: body,
+                headers: new Headers({
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                })
 
-        })
+            })
             .then((response) => {
                 return response.json();
             });

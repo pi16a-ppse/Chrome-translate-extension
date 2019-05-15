@@ -1,8 +1,7 @@
-
 /**
  * Проверяет, что строка уже закодирована (URL-valid)
  * @param str - строка для проверки
- * @returns boolean
+ * @returns {boolean}
  */
 function isEncoded(str) {
     return decodeURI(str) !== str;
@@ -11,6 +10,7 @@ function isEncoded(str) {
 /**
  * shortcut для console.log
  * @param text
+ * @returns {void}
  */
 let log = (text) => {
     if (typeof text === "object") {
@@ -30,9 +30,9 @@ let log = (text) => {
 /**
  * Проверяет, что строка пуста или состоит из пробельных символов (пробелы, табы и т.д.)
  * @param {string} str
+ * @returns {void}
  */
 function isEmptyOrSpaces(str) {
     return str == null || str.trim() === '';
 
 }
-
