@@ -2,103 +2,81 @@
 <p>Данный проект является браузерным расширением-переводчиком страниц.</p>
 <p>Проект доступен в Интернете: https://github.com/pi16a-ppse/Translate-Opera-browser-extension</p>
 <h2>Особенности проекта</h2>
-<p>Наличие страницы настроек;</p>
-<p>Перевод интерфейса на несколько языков;</p>
-<p>Возможность перевести страницу по нажатию кнопки;</p>
-<p>Возможность установить язык по умолчанию;</p>
-<p>Возможность настройки перевода для каждого языка отдельно.</p>
+<p>Перевод выделенного текста на язык браузера;</p>
+<p>Возможность перевести страницу по нажатию всплывающей кнопки;</p>
+<p>Возможность перевода по двойному клику;</p>
+<p>Возможность перевода по горячей клавише (Ctrl+Enter);</p>
 <h1>Детали реализации</h1>
 <p>Особенности реализации проекта в целом:</p>
-<h2>Алгоритм инициализации перевода</h2>
-<p>При нажатии кнопки "перевести", активируется скрипт JavaScript, он ищет все текстовые узлы на странице и запоминает атрибуты.</p>
-<pre><code>                /*
-Заполнение страницы переведенным текстом
- */
-opera.isReady(function() {
-  /**
-   * Карта атрибутов
-   * Описывает карту/массив атрибутов.
-   * Нужна для поиска этих атрибутов и замены в коде.
-   * @type {{for: string, className: string, html: string, text: string}} - структура карты.
-   */
-  var attributeNameMap = window[&quot;attributeNameMap&quot;] = {
-    &#39;className&#39;: &#39;className&#39;,
-    &#39;for&#39;: &#39;htmlFor&#39;,
-    html: &#39;innerHTML&#39;,
-    text: &#39;textContent&#39;
-  };
-  var CustomDOMElement = window[&quot;CustomDOMElement&quot;] = {
-    create: function(tag, props, children) {
-      var el = document.createElement(tag);
-      if (props) {
-        CustomDOMElement.setAttributes(el, props);
-      }
-      if (children) {
-        for (var i = 0, l = children.length; i &lt; l; i += 1) {
-          el.appendChild(children[i]);
-        }
-      }
-      return el;
-    },
-    setAttributes: function(el, props) {
-      for (var prop in props) {
-        if (props.hasOwnProperty(prop)) {
-          var name = attributeNameMap[prop],
-              value = props[prop];
-          if (value) {
-            if (name) {
-              el[name] = value;
-            } else {
-              el.setAttribute(prop, value);
-            }
-          }
-        }
-      }
+<h2>Алгоритм определения языка</h2>
+<p>Ниже приведена функция, которая на вход принимает текст для перевода, отправляет его на страницу API Яндекс.Переводчика, обрабатывает ответ и возвращает текстовый код языка.</p>
+<pre><code>                /**
+     * Определяет язык текста. Асинхронная функция. (возвращает promise)
+     * @param text - текст, язык которого нужно узнать
+     * @returns {Promise&lt;json&gt;} - json {code, lang}, обернутый в promise
+     */
+    detectLanguageFor: async function (text) {
+        if (!isEncoded(text))
+            text = encodeURI(text);
+        // log(&quot;after encodeURI, the text is &quot; + text);
+        let key = this.key;
+        let detectApi = &quot;https://translate.yandex.net/api/v1.5/tr.json/detect&quot;;
+        detectApi += &quot;?&quot;;
+        let url = `${detectApi}?&amp;key=${key}`;
+        let body = `text=${text}`;
+
+        // json в формате {code, lang}
+        let langData = await fetch(url, {
+                method: &#39;POST&#39;,
+                body: body,
+                headers: new Headers({
+                    &#39;Content-Type&#39;: &#39;application/x-www-form-urlencoded&#39;
+                })
+
+            })
+            .then((response) =&gt; {
+                return response.json();
+            });
+        let lang = langData.lang;
+
+        return lang;
     }
-  };
-  }, false);
-});
+
                 </code></pre>
 				
-				<h1>Где задать языки для перевода и выбора языка?</h1>
-<p>На странице настроек. В коде этот блок находится в файле nameMap.js. Здесь происходит инициализация этого списка.</p>
-<pre><code>                /*
- Инициализация списка языков
- */
-opera.isReady(function() {
-  var NAME_MAP = window[&quot;NAME_MAP&quot;] = {
-    &quot;be&quot;: &quot;Belarusian - Беларуская&quot;,
-    &quot;bg&quot;: &quot;Bulgarian - български език&quot;,
-    &quot;en&quot;: &quot;English&quot;,
-    &quot;eo&quot;: &quot;Esperanto - Esperanto&quot;,
-    &quot;et&quot;: &quot;Estonian - Eesti&quot;,
-    &quot;ro&quot;: &quot;Romanian - Română&quot;,
-    &quot;ru&quot;: &quot;Russian - Русский&quot;,
-    &quot;uk&quot;: &quot;Ukrainian - Українська&quot;,
-    &quot;ur&quot;: &quot;Urdu - ہندوستانی&quot;,
-    &quot;vi&quot;: &quot;Vietnamese - Tiếng Việt&quot;,
-  };
-});
+				<h1>Как происходит отправка запроса и получения ответа?</h1>
+<p>С помощью функции fetch: отправка - через Post запрос с заданным телом. Обработка ответа - в callback-е.</p>
+<p>В листинге ниже я отправляю запрос на перевод и возвращаю переведенный текст.</p>
+<pre><code>    let langTo = navigator.language.substr(0, 2);
+        let lang = langFrom + &#39;-&#39; + langTo;
+        // log(&quot;translate lang is &quot; + lang);
+        let url = &#39;https://translate.yandex.net/api/v1.5/tr.json/translate?&#39;;
+        url += &#39;key=&#39; + this.key;
+        url += &#39;&amp;lang=&#39; + lang;
+
+        let body = `text=${text}`;
+        return fetch(url, {
+                method: &#39;POST&#39;,
+                body: body,
+                headers: new Headers({
+                    &#39;Content-Type&#39;: &#39;application/x-www-form-urlencoded&#39;
+                })
+
+            })
+            .then(response =&gt;
+                response.json());
+
                 </code></pre>
-<h1>Как перевести страницу на другой язык, но при этом не сломать элементы форм?</h1>
-<p>Пример кода (из проекта) см. ниже:</p>
+<h1>Какие библиотеки вы используете?</h1>
+<p>Всего одну - JQuery. Также все дополнительные "удобные" методы описаны в файле js/convenient.js:</p>
+<p>Например, эта функция проверяет, что строка Url-Valid (т.е. Url-Encoded):</p>
 <pre><code>                /**
- /*
-Подготовка переведенных элементов (и сам перевод)
- */
-opera.isReady(
-    /**
-     * Функция-обертка для перевода
-     */
-    function() {
-  // Элементы для перевода (text nodes)
-  var translatableElements = document.querySelectorAll(&quot;._translate&quot;);
-  for (var i = 0, l = translatableElements.length; i &lt; l; i++) {
-    if (translatableElements[i].tagName === &#39;INPUT&#39;) {
-      translatableElements[i].value = i18nlib.translate(translatableElements[i].id);
-    } else {
-      translatableElements[i].textContent = i18nlib.translate(translatableElements[i].id);
-    }
+  * Проверяет, что строка уже закодирована (URL-valid)
+  * @param str - строка для проверки
+  * @returns {boolean}
+  */
+  function isEncoded(str) {
+      return decodeURI(str) !== str;
   }
-});
+
                 </code></pre>
