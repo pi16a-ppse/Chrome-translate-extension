@@ -19,7 +19,7 @@
     <chapter>
         <title>Описание проекта</title>
         <para>Данный проект является браузерным расширением-переводчиком страниц.</para>
-        <para>Проект доступен в Интернете: https://github.com/pi16a-ppse/Translate-Opera-browser-extension</para>
+        <para>Проект <link xlink:href="https://github.com/pi16a-ppse/Translate-Opera-browser-extension"> доступен в Интернете:</link></para>
         <section>
             <title>Особенности проекта</title>
             <para>Перевод выделенного текста на язык браузера;</para>
