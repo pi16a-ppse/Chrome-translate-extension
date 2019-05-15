@@ -1,0 +1,82 @@
+<h1>Описание проекта</h1>
+<p>Данный проект является браузерным расширением-переводчиком страниц.</p>
+<p>Проект доступен в Интернете: https://github.com/pi16a-ppse/Translate-Opera-browser-extension</p>
+<h2>Особенности проекта</h2>
+<p>Перевод выделенного текста на язык браузера;</p>
+<p>Возможность перевести страницу по нажатию всплывающей кнопки;</p>
+<p>Возможность перевода по двойному клику;</p>
+<p>Возможность перевода по горячей клавише (Ctrl+Enter);</p>
+<h1>Детали реализации</h1>
+<p>Особенности реализации проекта в целом:</p>
+<h2>Алгоритм определения языка</h2>
+<p>Ниже приведена функция, которая на вход принимает текст для перевода, отправляет его на страницу API Яндекс.Переводчика, обрабатывает ответ и возвращает текстовый код языка.</p>
+<pre><code>                /**
+     * Определяет язык текста. Асинхронная функция. (возвращает promise)
+     * @param text - текст, язык которого нужно узнать
+     * @returns {Promise&lt;json&gt;} - json {code, lang}, обернутый в promise
+     */
+    detectLanguageFor: async function (text) {
+        if (!isEncoded(text))
+            text = encodeURI(text);
+        // log(&quot;after encodeURI, the text is &quot; + text);
+        let key = this.key;
+        let detectApi = &quot;https://translate.yandex.net/api/v1.5/tr.json/detect&quot;;
+        detectApi += &quot;?&quot;;
+        let url = `${detectApi}?&amp;key=${key}`;
+        let body = `text=${text}`;
+
+        // json в формате {code, lang}
+        let langData = await fetch(url, {
+                method: &#39;POST&#39;,
+                body: body,
+                headers: new Headers({
+                    &#39;Content-Type&#39;: &#39;application/x-www-form-urlencoded&#39;
+                })
+
+            })
+            .then((response) =&gt; {
+                return response.json();
+            });
+        let lang = langData.lang;
+
+        return lang;
+    }
+
+                </code></pre>
+				
+				<h1>Как происходит отправка запроса и получения ответа?</h1>
+<p>С помощью функции fetch: отправка - через Post запрос с заданным телом. Обработка ответа - в callback-е.</p>
+<p>В листинге ниже я отправляю запрос на перевод и возвращаю переведенный текст.</p>
+<pre><code>    let langTo = navigator.language.substr(0, 2);
+        let lang = langFrom + &#39;-&#39; + langTo;
+        // log(&quot;translate lang is &quot; + lang);
+        let url = &#39;https://translate.yandex.net/api/v1.5/tr.json/translate?&#39;;
+        url += &#39;key=&#39; + this.key;
+        url += &#39;&amp;lang=&#39; + lang;
+
+        let body = `text=${text}`;
+        return fetch(url, {
+                method: &#39;POST&#39;,
+                body: body,
+                headers: new Headers({
+                    &#39;Content-Type&#39;: &#39;application/x-www-form-urlencoded&#39;
+                })
+
+            })
+            .then(response =&gt;
+                response.json());
+
+                </code></pre>
+<h1>Какие библиотеки вы используете?</h1>
+<p>Всего одну - JQuery. Также все дополнительные "удобные" методы описаны в файле js/convenient.js:</p>
+<p>Например, эта функция проверяет, что строка Url-Valid (т.е. Url-Encoded):</p>
+<pre><code>                /**
+  * Проверяет, что строка уже закодирована (URL-valid)
+  * @param str - строка для проверки
+  * @returns {boolean}
+  */
+  function isEncoded(str) {
+      return decodeURI(str) !== str;
+  }
+
+                </code></pre>
