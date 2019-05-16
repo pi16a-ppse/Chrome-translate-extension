@@ -56,9 +56,39 @@
               
                 
                 <li><a
-                  href='#translateandshow'
+                  href='#keydown'
                   class="">
-                  translateAndShow
+                  keydown
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#isctrl'
+                  class="">
+                  isCtrl
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#isctrl'
+                  class="">
+                  isCtrl
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#hideoldelements'
+                  class="">
+                  hideOldElements
                   
                 </a>
                 
@@ -86,9 +116,59 @@
               
                 
                 <li><a
+                  href='#handleselection'
+                  class="">
+                  handleSelection
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#show'
+                  class="">
+                  show
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#mouseup'
+                  class="">
+                  mouseup
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#translateandshow'
+                  class="">
+                  translateAndShow
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#range'
                   class="">
                   range
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#css'
+                  class="">
+                  css
                   
                 </a>
                 
@@ -240,7 +320,7 @@
   </div>
   
 
-  <p>Делает перевод и сопутствующие действия</p>
+  <p>Переводит текст и выводит результат.</p>
 
     <div class='pre p1 fill-light mt0'>doTranslateActions(): void</div>
   
@@ -344,17 +424,223 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='translateandshow'>
-      translateAndShow
+    <h3 class='fl m0' id='keydown'>
+      keydown
     </h3>
     
     
   </div>
   
 
-  <p>По идее, запускается по клику на tempButton. Переводит и показывает перевод слова.</p>
+  <p>При нажатии на Ctrl+Enter, показываем перевод; При нажатии на Esc, прячем его.</p>
 
-    <div class='pre p1 fill-light mt0'>translateAndShow(): void</div>
+    <div class='pre p1 fill-light mt0'>keydown</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>e</span> <code class='quiet'>(any)</code>
+	    объект события мыши
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='isctrl'>
+      isCtrl
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Обрабатываем "отжатие" Ctrl</p>
+
+    <div class='pre p1 fill-light mt0'>isCtrl</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='isctrl'>
+      isCtrl
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Обрабатываем нажатие Ctrl</p>
+
+    <div class='pre p1 fill-light mt0'>isCtrl</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='hideoldelements'>
+      hideOldElements
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Обрабатываем нажатие ESC</p>
+
+    <div class='pre p1 fill-light mt0'>hideOldElements</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='hideoldelements'>
+      hideOldElements
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Прячет устаревшие временные элементы на странице (типа блока перевода)</p>
+
+    <div class='pre p1 fill-light mt0'>hideOldElements(): void</div>
   
   
 
@@ -400,39 +686,31 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='hideoldelements'>
-      hideOldElements
+    <h3 class='fl m0' id='handleselection'>
+      handleSelection
     </h3>
     
     
   </div>
   
 
-  <p>Удаляет устаревшие временные элементы на странице (типа блока перевода)</p>
+  <p>Обрабатываем нажатие Ctrl+Enter</p>
 
-    <div class='pre p1 fill-light mt0'>hideOldElements(): void</div>
-  
-  
-
-  
-  
-  
-  
+    <div class='pre p1 fill-light mt0'>handleSelection</div>
   
   
 
+  
+  
+  
+  
+  
   
 
   
 
   
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>void</code>:
-        
 
-      
-    
   
 
   
@@ -512,6 +790,158 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='show'>
+      show
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Показываем кнопку перевода</p>
+
+    <div class='pre p1 fill-light mt0'>show</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='mouseup'>
+      mouseup
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Обрабатываем событие "Отжатия" мыши, т.е. запускаем обработку выделения мышью</p>
+
+    <div class='pre p1 fill-light mt0'>mouseup</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='translateandshow'>
+      translateAndShow
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Запускается по клику на tempButton. Переводит и показывает перевод слова.</p>
+
+    <div class='pre p1 fill-light mt0'>translateAndShow(): void</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>void</code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='range'>
       range
     </h3>
@@ -523,6 +953,54 @@
   <p>Создаем range, чтобы получить координаты выделения.</p>
 
     <div class='pre p1 fill-light mt0'>range</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='css'>
+      css
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>ставим блок-кнопку перевода в месте, где закончилось выделение</p>
+
+    <div class='pre p1 fill-light mt0'>css</div>
   
   
 
@@ -638,7 +1116,7 @@
   </div>
   
 
-  <p>shortcut для console.log</p>
+  <p>shortcut для console.log. Если отданная переменная - это объект, то выводит ее как объект. Иначе выводит как обычный текст.</p>
 
     <div class='pre p1 fill-light mt0'>log(text: any): void</div>
   
