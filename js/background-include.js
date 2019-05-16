@@ -7,7 +7,7 @@
 let selectionText = "";
 
 /**
- * Делает перевод и сопутствующие действия
+ * Переводит текст и выводит результат.
  * @async
  * @returns {void}
  */
@@ -36,7 +36,9 @@ let doTranslateActions = async () => {
  * @returns {void}
  */
 $(document).ready(function () {
-    // создаю div-активатор перевода
+    /*
+     * Код блока перевода. Это тот pop-up, который показывается при нажатии на кнопку перевода
+     */
     let $div = $("<div id=\"myTempDiv\" style='background: transparent; width: 200px; display: flex; flex-direction: column; position:absolute; z-index: 9999;'>").appendTo($("body"));
 
     let translateButton = $("<button class=\"btn\" id=\"translateButton\">Перевести</button>").appendTo($div);
@@ -61,26 +63,51 @@ $(document).ready(function () {
     $('#btn_submit').click(translateAndShow);
 
 
-    // при нажатии на Ctrl + Enter
-    let isCtrl = false;
-    $(document).keyup(function (e) {
-        if (e.which == 17) isCtrl = false;
-    }).keydown(function (e) {
-        if (e.which == 27)
-            hideOldElements();
 
-        if (e.which == 17) isCtrl = true;
-        if (e.which == 13 && isCtrl == true) {
-            // получаем и показываем выделенный текст
-            $("#translateButton").show();
-            handleSelection();
-        }
-    });
+    {
+        let isCtrl = false;
+        /**
+         * При нажатии на Ctrl+Enter, показываем перевод; При нажатии на Esc, прячем его.
+         * @param e - объект события мыши
+         */
+        $(document).keyup(function (e) {
+            /**
+             * Обрабатываем "отжатие" Ctrl
+             */
+            if (e.which == 17) {
+                isCtrl = false;
+            }
+        }).keydown(function (e) {
+            /**
+             * Обрабатываем нажатие ESC
+             */
+            if (e.which == 27) {
+                hideOldElements();
+            }
 
-    // $(document).mousedown(() => {
-    //     // hideOldElements();
-    // });
+            /**
+             * Обрабатываем нажатие Ctrl
+             */
+            if (e.which == 17) {
+                isCtrl = true;
+            }
 
+            /**
+             * Обрабатываем нажатие Ctrl+Enter
+             */
+            if (e.which == 13 && isCtrl == true) {
+                /**
+                 * Показываем кнопку перевода
+                 * */
+                $("#translateButton").show();
+                handleSelection();
+            }
+        });
+    }
+
+    /**
+     * Обрабатываем событие "Отжатия" мыши, т.е. запускаем обработку выделения мышью
+     */
     $(document).mouseup(() => {
         $("#translateButton").show();
         handleSelection();
@@ -90,7 +117,7 @@ $(document).ready(function () {
 });
 
 /**
- * По идее, запускается по клику на tempButton. Переводит и показывает перевод слова.
+ * Запускается по клику на tempButton. Переводит и показывает перевод слова.
  * @returns {void}
  */
 async function translateAndShow() {
@@ -113,7 +140,7 @@ async function translateAndShow() {
 
 
 /**
- * Удаляет устаревшие временные элементы на странице (типа блока перевода)
+ * Прячет устаревшие временные элементы на странице (типа блока перевода)
  * @returns {void}
  */
 function hideOldElements() {
@@ -121,7 +148,6 @@ function hideOldElements() {
     $div.hide();
     let bodyOfDiv = $("#bodyOfTranslateDiv");
     bodyOfDiv.hide();
-
 }
 
 /**
@@ -136,8 +162,9 @@ function handleSelection() {
     log(selection);
     text = selection.toString();
     selectionText = text;
-    if (isEmptyOrSpaces(text))
+    if (isEmptyOrSpaces(text)) {
         return text;
+    }
 
     /**
      * Создаем range, чтобы получить координаты выделения.
@@ -152,7 +179,9 @@ function handleSelection() {
     const x = $span.offset().left;
     let y = $span.offset().top;
     let $div = $("#myTempDiv");
-    // $div.text(x + " " + y);
+    /**
+     * ставим блок-кнопку перевода в месте, где закончилось выделение
+     */
     $div.css({
         left: x,
         top: y + ($span.height())
